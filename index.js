@@ -1,8 +1,11 @@
-require('dotenv').config();
+const dotenv = require('dotenv').config();
+dotenv.config();
 
 const bodyParser = require('body-parser');
 const express = require ('express');
 const mongoose = require('mongoose');
+const cors = require('cors');
+
 const mongoString = process.env.DATABASE_URL;
 const http = require('http');
 
@@ -21,6 +24,12 @@ database.once('connected', ()=>{
 
 const routes = require('./routes/routes')
 const app = express();
+const port = process.env.port || 5000;
+
+// Connect ke MongoDB
+mongoose.connect(process.env.MONGODB_URL)
+.then(()=> console.log('MongoDB Connected'))
+.catch((err) => console.log(err));
 const server = http.createServer(app);
 
 app.use(bodyParser.json());

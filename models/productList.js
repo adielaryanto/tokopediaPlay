@@ -1,4 +1,3 @@
-const { link } = require('fs');
 const mongoose = require('mongoose');
 
 const productListSchema = new mongoose.Schema({
