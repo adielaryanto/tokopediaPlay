@@ -2,8 +2,9 @@ const mongoose = require('mongoose');
 
 const videoThumbnailSchema = new mongoose.Schema({
     videoID :{
+        
         required:true,
-        type:String
+        type:mongoose.Schema.Types.ObjectId, ref : 'videoThumbnailList'
     },
     urlImage :{
         required:true,

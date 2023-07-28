@@ -32,5 +32,27 @@ router.get('/getAllMovies',async(req,res)=>{
     }
 });
 
+// Get video thumbnails
+app.get('/videoThumbnails', async(req, res)=>{
+    try {
+        const videoThumbnails = await videoThumbnails.find({});
+        res.json(videoThumbnails);
+    }catch{
+        res.status(500).json({message:'Gagal mencari Video Thumbnails', error : err});
+    }
+})
 
+// submit video
+app.post('/videoThumbnails', async(req, res)=>{
+    try{
+        const newVideoThumbnail = new videoThumbnails(req.body);
+        await newVideoThumbnai.save();
+        res.json({message : 'Berhasil menambahkan video Thumbnail baru'});
+
+    }catch{
+        rest.status(400).json({message: 'gagal menambahkan video Thumbnail', error:err});
+    }
+});
+
+// update video thumbnail
 module.exports = router;

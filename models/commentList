@@ -11,7 +11,12 @@ const commentListSchema = new mongoose.Schema({
     },
     timestamp :{
         required:true,
-        type : Date
+        type : Date,
+        default : Date.now
+    },
+    videoID : {
+        type : mongoose.Schema.Types.ObjectId, ref : 'videoThumbnailList'
+
     }
     
 })

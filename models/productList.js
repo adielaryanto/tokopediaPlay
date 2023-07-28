@@ -16,6 +16,9 @@ const productListSchema = new mongoose.Schema({
     price :{
         required:true,
         type : Number
+    },
+    videoID : {
+        type : mongoose.Schema.Types.ObjectId, ref :'Video'
     }
     
 })
