@@ -18,9 +18,9 @@ const productListSchema = new mongoose.Schema({
         type : Number
     },
     videoID : {
-        type : mongoose.Schema.Types.ObjectId, ref :'Video'
+        type : String
     }
     
 })
 
-module.exports = mongoose.model('ProductList', productListSchema)
+module.exports = mongoose.model('Product', productListSchema)

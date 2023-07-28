@@ -10,15 +10,14 @@ const commentListSchema = new mongoose.Schema({
         type : String
     },
     timestamp :{
-        required:true,
+        // required:true,
         type : Date,
         default : Date.now
     },
     videoID : {
-        type : mongoose.Schema.Types.ObjectId, ref : 'videoThumbnailList'
-
+        type : String
     }
     
 })
 
-module.exports = mongoose.model('CommentList', commentListSchema)
+module.exports = mongoose.model('Comment', commentListSchema)

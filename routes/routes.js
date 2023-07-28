@@ -1,58 +1,64 @@
 const express = require('express');
-const router = express.Router()
+const router = express.Router();
 
 // Connection ke model yang dibutuhkan
-const Movie = require('../models/movie');
-const ProductList = require ('../models/productList');
-const CommentList = require ('../models/commentList');
-const VideoThumbnailList= require ('../models/videoThumbnailList');
-
-// Post Movies
-router.post('/postMovies', (req,res)=>{
-    const movie = new Movie({
-        title : req.body.title,
-        year:req.body.year
-    })
-
-    try{
-        const movieToSave = movie.save();
-        res.status(200).json(movieToSave)
-    }catch(error){
-        res.status(400).json({message:error.message})
-    }
-})
-
-// Get all movies
-router.get('/getAllMovies',async(req,res)=>{
-    try{
-        const movies = await Movie.find();
-        res.json(movies)
-    }catch(error){
-        res.status(500).json({message:error.message})
-    }
-});
+const Product = require ('../models/productList');
+const Comment = require ('../models/commentList');
+const Video= require ('../models/videoThumbnailList');
+const commentList = require('../models/commentList');
+const { json } = require('body-parser');
 
 // Get video thumbnails
-app.get('/videoThumbnails', async(req, res)=>{
+router.get('/video-thumbnail', async(req, res)=>{
     try {
-        const videoThumbnails = await videoThumbnails.find({});
+        const videoThumbnails = await Video.find({});
         res.json(videoThumbnails);
-    }catch{
-        res.status(500).json({message:'Gagal mencari Video Thumbnails', error : err});
+    }catch(err){
+        res.status(500).json({message:'Gagal mencari Video Thumbnails', error : err.message});
     }
 })
 
-// submit video
-app.post('/videoThumbnails', async(req, res)=>{
-    try{
-        const newVideoThumbnail = new videoThumbnails(req.body);
-        await newVideoThumbnai.save();
-        res.json({message : 'Berhasil menambahkan video Thumbnail baru'});
 
-    }catch{
-        rest.status(400).json({message: 'gagal menambahkan video Thumbnail', error:err});
+// product list
+router.get('/:videoID/product', async(req, res)=>{
+    try {
+        const {videoID} = req.params;
+        console.log(videoID);
+        const productList = await Product.find({videoID});
+        res.json(productList);
+    }catch(err){
+        res.status(500).json({message:'Gagal mencari product list', error : err});
     }
-});
+})
 
-// update video thumbnail
+
+// Get comment list
+router.get('/:videoID/comment', async(req, res)=>{
+    try {
+        const {videoID} = req.params;
+        console.log(videoID);
+        const CommentList = await Comment.find({videoID});
+        res.json(CommentList);
+    }catch(err){
+        res.status(500).json({message:'Gagal mencari comment list', error : err.message});
+    }
+})
+router.post('/:videoID/submit-comment', async(req, res)=>{
+        const {videoID} = req.params;
+
+        const { username, comment } = req.body;
+  
+        const newComment = await new Comment({
+            username, 
+            comment, 
+            videoID
+            });
+
+    await newComment.save();
+
+    res.json({
+        message : 'Komen sukses ditambahkan'
+    })
+})
+
 module.exports = router;
